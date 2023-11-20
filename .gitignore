@@ -1,0 +1,17 @@
+## Terraform related ##
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.terraform.*
+
+# Terragrunt generated files
+.terragrunt-cache
+*_backend.tf
+
+## Visual Studio Code related ##
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+## MacOS related ##
+.DS_Store
