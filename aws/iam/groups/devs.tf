@@ -25,3 +25,8 @@ resource "aws_iam_group_policy_attachment" "devs_policy_3" {
   group      = aws_iam_group.devs.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonPollyFullAccess"
 }
+
+resource "aws_iam_group_policy_attachment" "devs_policy_4" {
+  group      = aws_iam_group.devs.name
+  policy_arn = "arn:aws:iam::670989880542:policy/ses_send_email"
+}

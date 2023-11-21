@@ -41,3 +41,24 @@ resource "aws_iam_policy" "s3_monum_profile_images_read_write" {
     ]
   })
 }
+
+resource "aws_iam_policy" "ses_send_email" {
+  name        = "ses_send_email"
+  path        = "/"
+  description = "Send emails with SES."
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "SendEmail"
+        Effect = "Allow"
+        Action = [
+          "ses:SendEmail",
+        ]
+        Resource = [
+          "arn:aws:ses:eu-west-1:670989880542:identity/*",
+        ]
+      }
+    ]
+  })
+}
