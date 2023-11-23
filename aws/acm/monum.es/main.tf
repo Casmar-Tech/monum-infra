@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "cert" {
-  domain_name       = "monum.es"
+  domain_name       = "*.monum.es"
   validation_method = "DNS"
 }
 
