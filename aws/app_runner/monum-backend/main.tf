@@ -1,29 +1,7 @@
-resource "aws_iam_role" "app_runner_service_role" {
-  name = "monum-backend-app-runner-service-role"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Sid    = ""
-        Principal = {
-          Service = "build.apprunner.amazonaws.com"
-        }
-      },
-    ]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "app_runner_role_access_ecr" {
-  role       = aws_iam_role.app_runner_service_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess"
-}
-
 resource "aws_apprunner_auto_scaling_configuration_version" "autoscaling_config" {
   auto_scaling_configuration_name = "monum_backend_autoscaling_config"
   max_concurrency                 = 50
-  max_size                        = 3
+  max_size                        = 2
   min_size                        = 1
 
   tags = {
@@ -33,11 +11,23 @@ resource "aws_apprunner_auto_scaling_configuration_version" "autoscaling_config"
 
 resource "aws_apprunner_service" "monum_backend" {
   service_name = "monum-backend"
-
   source_configuration {
     image_repository {
       image_configuration {
         port = "8080"
+        runtime_environment_variables = {
+          S3_BUCKET_IMAGES = "monum-profile-images"
+          S3_BUCKET_AUDIOS = "monum-polly"
+          NODE_ENV         = "development" # production
+        }
+        runtime_environment_secrets = {
+          DEEPL_AUTH_KEY         = "${data.aws_secretsmanager_secret.monum_backend_environment_secrets.arn}:DEEPL_AUTH_KEY::"
+          OPENAI_API_KEY         = "${data.aws_secretsmanager_secret.monum_backend_environment_secrets.arn}:OPENAI_API_KEY::"
+          OPENAI_ORGANIZATION_ID = "${data.aws_secretsmanager_secret.monum_backend_environment_secrets.arn}:OPENAI_ORGANIZATION_ID::"
+          PEXELS_API_KEY         = "${data.aws_secretsmanager_secret.monum_backend_environment_secrets.arn}:PEXELS_API_KEY::"
+          SECRET_KEY             = "${data.aws_secretsmanager_secret.monum_backend_environment_secrets.arn}:SECRET_KEY::"
+          MONGODB_URI            = "${data.aws_secretsmanager_secret.monum_backend_environment_secrets.arn}:MONGODB_URI::"
+        }
       }
       image_identifier      = "670989880542.dkr.ecr.eu-west-1.amazonaws.com/monum-backend:latest"
       image_repository_type = "ECR"
@@ -49,6 +39,12 @@ resource "aws_apprunner_service" "monum_backend" {
   }
 
   auto_scaling_configuration_arn = aws_apprunner_auto_scaling_configuration_version.autoscaling_config.arn
+
+  instance_configuration {
+    cpu               = "512"
+    memory            = "1024"
+    instance_role_arn = aws_iam_role.app_runner_instance_role.arn
+  }
 
   tags = {
     Name = "monum-backend"
