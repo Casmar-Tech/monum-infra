@@ -3,12 +3,13 @@
   "editor.insertSpaces": true,
   "editor.formatOnSave": true,
   "editor.suggest.preview": true,
+  "editor.linkedEditing": true,
 
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
   "files.associations": {
     "*.tpl.json": "terraform"
   },
-  "files.insertFinalNewline": true,
-  "files.trimTrailingWhitespace": true,
 
   "[terraform]": {
     "editor.defaultFormatter": "hashicorp.terraform",
@@ -20,6 +21,22 @@
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file"
   },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+
   "emeraldwalk.runonsave": {
     "commands": [
       {

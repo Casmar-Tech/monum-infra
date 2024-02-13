@@ -16,9 +16,10 @@ resource "aws_apprunner_service" "monum_backend" {
       image_configuration {
         port = "8080"
         runtime_environment_variables = {
-          S3_BUCKET_IMAGES = "monum-profile-images"
-          S3_BUCKET_AUDIOS = "monum-polly"
-          NODE_ENV         = "development" # production
+          S3_BUCKET_IMAGES        = "monum-profile-images"
+          S3_BUCKET_AUDIOS        = "monum-polly"
+          S3_BUCKET_PLACES_IMAGES = "monum-place-photos"
+          NODE_ENV                = "development" # production
         }
         runtime_environment_secrets = {
           DEEPL_AUTH_KEY         = "${data.aws_secretsmanager_secret.monum_backend_environment_secrets.arn}:DEEPL_AUTH_KEY::"

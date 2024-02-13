@@ -44,15 +44,25 @@ resource "aws_iam_role_policy_attachment" "app_runner_instance_role_1" {
 
 resource "aws_iam_role_policy_attachment" "app_runner_instance_role_2" {
   role       = aws_iam_role.app_runner_instance_role.name
-  policy_arn = "arn:aws:iam::670989880542:policy/s3_monum_polly_read_write"
+  policy_arn = "arn:aws:iam::670989880542:policy/s3_list_all_buckets"
 }
 
 resource "aws_iam_role_policy_attachment" "app_runner_instance_role_3" {
   role       = aws_iam_role.app_runner_instance_role.name
-  policy_arn = "arn:aws:iam::670989880542:policy/s3_monum_profile_images_read_write"
+  policy_arn = "arn:aws:iam::670989880542:policy/s3_monum_polly_read_write"
 }
 
 resource "aws_iam_role_policy_attachment" "app_runner_instance_role_4" {
+  role       = aws_iam_role.app_runner_instance_role.name
+  policy_arn = "arn:aws:iam::670989880542:policy/s3_monum_place_photos_read_write"
+}
+
+resource "aws_iam_role_policy_attachment" "app_runner_instance_role_5" {
+  role       = aws_iam_role.app_runner_instance_role.name
+  policy_arn = "arn:aws:iam::670989880542:policy/s3_monum_profile_images_read_write"
+}
+
+resource "aws_iam_role_policy_attachment" "app_runner_instance_role_6" {
   role       = aws_iam_role.app_runner_instance_role.name
   policy_arn = "arn:aws:iam::670989880542:policy/ses_send_email"
 }
@@ -86,7 +96,7 @@ resource "aws_iam_policy" "access_monum_backend_environment_secrets" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "app_runner_instance_role_5" {
+resource "aws_iam_role_policy_attachment" "app_runner_instance_role_7" {
   role       = aws_iam_role.app_runner_instance_role.name
   policy_arn = aws_iam_policy.access_monum_backend_environment_secrets.arn
 }
