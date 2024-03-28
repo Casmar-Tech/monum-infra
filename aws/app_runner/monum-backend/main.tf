@@ -20,6 +20,7 @@ resource "aws_apprunner_service" "monum_backend" {
           S3_BUCKET_AUDIOS        = "monum-polly"
           S3_BUCKET_PLACES_IMAGES = "monum-place-photos"
           NODE_ENV                = "development" # production
+          MEDIA_CLOUDFRONT_URL    = "https://media.monum.es"
         }
         runtime_environment_secrets = {
           DEEPL_AUTH_KEY         = "${data.aws_secretsmanager_secret.monum_backend_environment_secrets.arn}:DEEPL_AUTH_KEY::"
