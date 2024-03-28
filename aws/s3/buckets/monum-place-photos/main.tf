@@ -2,33 +2,6 @@ resource "aws_s3_bucket" "monum_place_photos" {
   bucket = "monum-place-photos"
 }
 
-resource "aws_s3_bucket_policy" "monum_place_photos_policy" {
-  bucket = aws_s3_bucket.monum_place_photos.id
-  policy = data.aws_iam_policy_document.monum_place_photos_policy_document.json
-}
-
-data "aws_iam_policy_document" "monum_place_photos_policy_document" {
-
-  statement {
-    sid    = "EnforcedTLS"
-    effect = "Deny"
-    principals {
-      type        = "*"
-      identifiers = ["*"]
-    }
-    actions = ["s3:*"]
-    resources = [
-      "${aws_s3_bucket.monum_place_photos.arn}/*",
-      aws_s3_bucket.monum_place_photos.arn,
-    ]
-    condition {
-      test     = "Bool"
-      variable = "aws:SecureTransport"
-      values   = ["false"]
-    }
-  }
-}
-
 resource "aws_s3_bucket_ownership_controls" "monum_place_photos" {
   bucket = aws_s3_bucket.monum_place_photos.id
   rule {
@@ -55,8 +28,23 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "monum_place_photo
 
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm     = "aws:kms"
-      kms_master_key_id = "arn:aws:kms:eu-west-1:${local.account_id}:alias/aws/s3"
+      sse_algorithm = "AES256"
     }
   }
+}
+
+resource "aws_s3_bucket_website_configuration" "website_config" {
+  bucket = aws_s3_bucket.monum_place_photos.id
+
+  index_document {
+    suffix = "index.html"
+  }
+
+  error_document {
+    key = "error.html"
+  }
+}
+
+output "domain_name" {
+  value = aws_s3_bucket.monum_place_photos.bucket_domain_name
 }
