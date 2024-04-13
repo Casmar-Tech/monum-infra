@@ -19,7 +19,7 @@ resource "aws_apprunner_service" "monum_backend" {
           S3_BUCKET_IMAGES        = "monum-profile-images"
           S3_BUCKET_AUDIOS        = "monum-polly"
           S3_BUCKET_PLACES_IMAGES = "monum-place-photos"
-          NODE_ENV                = "development" # production
+          NODE_ENV                = "production" # development
           MEDIA_CLOUDFRONT_URL    = "https://media.monum.es"
         }
         runtime_environment_secrets = {
@@ -43,8 +43,8 @@ resource "aws_apprunner_service" "monum_backend" {
   auto_scaling_configuration_arn = aws_apprunner_auto_scaling_configuration_version.autoscaling_config.arn
 
   instance_configuration {
-    cpu               = "512"
-    memory            = "1024"
+    cpu               = "1024"
+    memory            = "2048"
     instance_role_arn = aws_iam_role.app_runner_instance_role.arn
   }
 
