@@ -25,3 +25,17 @@ resource "aws_route53_record" "api_monum_es_ns" {
     "ns-126.awsdns-15.com.",
   ]
 }
+
+resource "aws_route53_record" "app_monum_es_ns" {
+  name    = "app.monum.es"
+  ttl     = 172800
+  type    = "NS"
+  zone_id = aws_route53_zone.monum_es.zone_id
+
+  records = [
+    "ns-877.awsdns-45.net.",
+    "ns-37.awsdns-04.com.",
+    "ns-1196.awsdns-21.org.",
+    "ns-1555.awsdns-02.co.uk.",
+  ]
+}
