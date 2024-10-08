@@ -26,6 +26,20 @@ resource "aws_route53_record" "api_monum_es_ns" {
   ]
 }
 
+resource "aws_route53_record" "mobile_monum_es_ns" {
+  name    = "mobile.monum.es"
+  ttl     = 172800
+  type    = "NS"
+  zone_id = aws_route53_zone.monum_es.zone_id
+
+  records = [
+    "dns1.p07.nsone.net",
+    "dns2.p07.nsone.net",
+    "dns3.p07.nsone.net",
+    "dns4.p07.nsone.net",
+  ]
+}
+
 # resource "aws_route53_record" "app_monum_es_ns" {
 #   name    = "app.monum.es"
 #   ttl     = 172800
