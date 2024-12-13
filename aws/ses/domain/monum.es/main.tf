@@ -43,7 +43,7 @@ resource "aws_route53_record" "monum_es_ses_domain_mail_from_mx" {
   name    = aws_ses_domain_mail_from.monum_es_mail_from.mail_from_domain
   type    = "MX"
   ttl     = "600"
-  records = ["10 feedback-smtp.eu-west-1.amazonses.com"]
+  records = ["1 SMTP.GOOGLE.COM", "10 inbound-smtp.us-east-1.amazonaws.com"]
 }
 
 resource "aws_route53_record" "monum_es_ses_domain_mail_from_txt" {
@@ -51,5 +51,5 @@ resource "aws_route53_record" "monum_es_ses_domain_mail_from_txt" {
   name    = aws_ses_domain_mail_from.monum_es_mail_from.mail_from_domain
   type    = "TXT"
   ttl     = "600"
-  records = ["v=spf1 include:amazonses.com -all"]
+  records = ["v=spf1 include:amazonses.com -all", "google-site-verification=bZNnS7ap4INzP3Ni6-v3RdTc9HlynHVOTS90iXtVX3c"]
 }
